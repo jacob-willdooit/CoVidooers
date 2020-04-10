@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="module_category_operations_health_portal" model="ir.module.category">
+            <field name="name">Patient Management</field>
+            <field name="description">Patient Management.</field>
+        </record>
+    </data>
+</odoo>

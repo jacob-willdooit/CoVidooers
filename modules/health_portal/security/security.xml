@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_health_portal_patient" model="res.groups">
+        <field name="name">Patient</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="health_portal.module_category_operations_health_portal"/>
+    </record>
+
+    <record id="group_health_portal_nurse" model="res.groups">
+        <field name="name">Nurse</field>
+        <field name="category_id" ref="health_portal.module_category_operations_health_portal"/>
+        <field name="implied_ids" eval="[(4, ref('group_health_portal_patient'))]"/>
+    </record>
+
+    <record id="group_health_portal_doctor" model="res.groups">
+        <field name="name">Doctor</field>
+        <field name="category_id" ref="health_portal.module_category_operations_health_portal"/>
+        <field name="implied_ids" eval="[(4, ref('group_health_portal_nurse'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>
