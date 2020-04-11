@@ -49,7 +49,7 @@ class HealthPatient(models.Model):
     def _compute_location_id(self):
         for patient in self:
             if patient.event_ids:
-                last_event = patient.event_ids.sorted('create_date', reverse=True)[-1]
+                last_event = patient.event_ids[-1]
                 patient.location_id = last_event.location_id
             else:
                 patient.location_id = False

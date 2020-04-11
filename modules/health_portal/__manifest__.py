@@ -22,6 +22,7 @@ Health Portal - Patient Management System
         'views/health_medication_views.xml',
         'views/health_patient_views.xml',
         'views/health_portal_views.xml',
+        'views/stock_location_views.xml',
     ],
     'images': [
         'static/description/icon.png',

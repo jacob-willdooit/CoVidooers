@@ -15,7 +15,8 @@
                         <field name="type"/>
                         <field name="practitioner_ids" widget="many2many_tags" context="{'active_test': False}" options="{'no_create': True}"/>
                         <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" options="{'no_create': True}"/>
-                        <field name="location_id" attrs="{'required': [('type', 'not in', ('condition','treatment'))]}"/>
+                        <field name="location_allowed" invisible="1"/>
+                        <field name="location_id" attrs="{'required': [('type', 'not in', ('condition','treatment'))]}" domain="[('id', 'in', location_allowed)]" options="{'no_create': True}"/>
                     </group>
                     <notebook>
                         <page string="Health Conditions" name="conditions">
