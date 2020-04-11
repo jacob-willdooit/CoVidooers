@@ -10,6 +10,11 @@
         parent="menu_health_portal_root"
         groups="group_health_portal_patient"/>
 
+    <menuitem id="health_portal_config_menu" name="Configuration"
+        sequence="20"
+        parent="menu_health_portal_root"
+        groups="group_health_portal_doctor"/>
+
     <record id="health_portal_patient_record_action" model="ir.actions.act_window">
         <field name="name">Patient Records</field>
         <field name="res_model">health.patient</field>
@@ -43,4 +48,21 @@
         action="health_portal_patient_event_action"
         parent="health_portal_patient_menu"
         groups="group_health_portal_patient"/>
+
+    <record id="health_portal_medication_action" model="ir.actions.act_window">
+        <field name="name">Medications</field>
+        <field name="res_model">health.medication</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new medication.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="health_portal_medication_menu" name="Medications"
+        sequence="10"
+        action="health_portal_medication_action"
+        parent="health_portal_config_menu"
+        groups="group_health_portal_doctor"/>
 </odoo>
