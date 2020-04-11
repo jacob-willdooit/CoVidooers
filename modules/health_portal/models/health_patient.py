@@ -17,6 +17,7 @@ class HealthPatient(models.Model):
             ('intersex', 'Intersex'),
         ], string='Biological Gender', required=True)
     dob = fields.Date(string='Date of Birth', required=True)
+    tod = fields.Datetime(string='Time of Death', group_operator='min')
     age = fields.Char(string='Age', compute='_compute_age', store=True, readonly=True)
     barcode = fields.Char(string='Barcode')
     admitted = fields.Boolean(string='Admitted', compute='_compute_admitted', store=True, readonly=True)

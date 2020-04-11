@@ -3,6 +3,7 @@ from odoo import api, fields, models, _
 
 class HealthCondition(models.Model):
     _name = 'health.condition'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Health Condition'
     _order = 'started_at desc'
 
@@ -11,6 +12,8 @@ class HealthCondition(models.Model):
     type_id = fields.Many2one('health.condition.type', string='Type', required=True)
     started_at = fields.Datetime(string='Started', group_operator='min', default=fields.Datetime.now, required=True)
     ended_at = fields.Datetime(string='Ended', group_operator='min')
+
+    medication_ids = fields.Many2many('health.medication.event', string='Medications')
 
 
 class HealthConditionCategory(models.Model):

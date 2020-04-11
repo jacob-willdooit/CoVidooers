@@ -3,6 +3,7 @@ from odoo import api, fields, models, _
 
 class HealthEvent(models.Model):
     _name = 'health.event'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Health Event'
     _order = 'create_date desc'
 
@@ -21,9 +22,4 @@ class HealthEvent(models.Model):
     location_id = fields.Many2one('stock.location', string='Location', required=True)
 
     condition_ids = fields.Many2many('health.condition', string='Health Conditions')
-    
-    medication_id = fields.Many2one('health.medication', string='Medications')
-    dose = fields.Float(string='Dose')
-    dose_uom_id = fields.Many2one('uom.uom', string="UOM")
-
-    note = fields.Text(string='Notes', translate=True)
+    medication_ids = fields.Many2many('health.medication.event', string='Medications')
