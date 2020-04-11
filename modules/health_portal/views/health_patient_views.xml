@@ -10,6 +10,7 @@
                 <sheet>
                     <field name="state" invisible="1"/>
                     <field name="active" invisible="1"/>
+                    <field name="new_rec" invisible="1"/>
                     <field name="admitted" invisible="1"/>
                     <widget name="web_ribbon" title="Admitted" attrs="{'invisible': ['|', '|', ('admitted', '=', False), ('state', '=', 'deceased'), ('active', '=', True)]}"/>
                     <widget name="web_ribbon" title="Archived" attrs="{'invisible': ['|', ('state', '=', 'deceased'), ('active', '=', True)]}"/>
@@ -19,17 +20,22 @@
                             <field name="partner_id"/>
                             <field name="display_name"/>
                             <field name="bio_gender"/>
+                            <field name="medicare_num"/>
                             <field name="dob"/>
-                            <field name="age" nolabel="1" class="oe_read_only"/>
+                            <field name="tod" attrs="{'invisible': [('state', '!=', 'deceased')]}"/>
+                            <field name="exp_out_date"/>
+                            <field name="age" class="oe_read_only"/>
                         </group>
                         <group>
-                            <field name="partner_image" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                            <field name="partner_image" widget="image" nolabel="1" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
                             <field name="location_id"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Events" name="events">
-                            <field name="event_ids" widget="one2many" colspan="4" nolabel="1" context="{'active_test': False, 'default_patient_id': id}"/>
+                            <field name="event_ids" widget="one2many" colspan="4" nolabel="1"
+                            context="{'active_test': False, 'default_patient_id': id}"
+                            attrs="{'readonly': [('new_rec', '=', True)]}"/>
                         </page>
                     </notebook>
                 </sheet>

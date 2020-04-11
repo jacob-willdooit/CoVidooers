@@ -12,8 +12,32 @@ class HealthCondition(models.Model):
     type_id = fields.Many2one('health.condition.type', string='Type', required=True)
     started_at = fields.Datetime(string='Started', group_operator='min', default=fields.Datetime.now, required=True)
     ended_at = fields.Datetime(string='Ended', group_operator='min')
+    state = fields.Selection(
+        [
+            ('ongoing', 'Ongoing'),
+            ('treated', 'Treated'),
+            ('terminal', 'Terminal'),
+            ('fatal', 'Fatal'),
+        ], string='Status', required=True, default='ongoing')
+    note = fields.Text(string='Notes')
 
     medication_ids = fields.Many2many('health.medication.event', string='Medications')
+
+
+    @api.onchange('state', 'started_at')
+    def _onchange_state(self):
+        for condition in self:
+            if condition.state == 'fatal':
+                condition.ended_at == condition.started_at
+    
+    def write(self, vals):
+        res = super(HealthCondition, self).write(vals)
+        for condition in self:
+            if condition.state == 'fatal':
+                patients = self.env['health.patient'].search([(condition, 'in', 'condition_ids')])
+                patients.tod = 'deceased'
+                patients.tod = condition.ended_at
+        return res
 
 
 class HealthConditionCategory(models.Model):

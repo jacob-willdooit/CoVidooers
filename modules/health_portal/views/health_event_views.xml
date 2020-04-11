@@ -9,11 +9,13 @@
                 </header>
                 <sheet>
                     <group string="Event Details">
-                        <field name="patient_id" readonly="1"/>
+                        <field name="new_rec" invisible="1"/>
+                        <field name="patient_id" attrs="{'readonly': [('new_rec', '=', False)]}"/>
+                        <field name="name"/>
                         <field name="type"/>
                         <field name="practitioner_ids" widget="many2many_tags" context="{'active_test': False}" options="{'no_create': True}"/>
                         <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" options="{'no_create': True}"/>
-                        <field name="location_id" attrs="{'required': [('type', 'in', ('condition','treatment'))]}"/>
+                        <field name="location_id" attrs="{'required': [('type', 'not in', ('condition','treatment'))]}"/>
                     </group>
                     <notebook>
                         <page string="Health Conditions" name="conditions">
