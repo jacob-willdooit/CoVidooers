@@ -25,7 +25,7 @@
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <group>
                         <field name="active" invisible="1"/>
-                        <field name="company_id" invisible="1"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
                         <label for="name" class="oe_edit_only"/>
                         <h1><field name="name"/></h1>
                         <label for="location_id" class="oe_edit_only"/>
@@ -53,9 +53,11 @@
         <field name="name">stock.location.tree.health</field>
         <field name="model">stock.location</field>
         <field name="arch" type="xml">
-            <tree string="Ward Management">
+            <tree string="Ward Management" decoration-success="less_half_full_room" decoration-danger="full_room">
                 <field name="active" invisible="1"/>
                 <field name="location_id" invisible="1"/>
+                <field name="less_half_full_room" invisible="1"/>
+                <field name="full_room" invisible="1"/>
                 <field name="complete_name" string="Room"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </tree>
