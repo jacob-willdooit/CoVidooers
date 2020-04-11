@@ -15,6 +15,7 @@ class HealthEvent(models.Model):
             ('in_patient', 'In Patient'),
             ('condition', 'Condition'),
             ('treatment', 'Treatment'),
+            ('ward', 'Ward'),
             ('out_patient', 'Out Patient'),
         ], string="Event Type", default='in_patient')
     practitioner_ids = fields.Many2many('res.users', column2='user_id', string='Health Practitioners', required=True)
