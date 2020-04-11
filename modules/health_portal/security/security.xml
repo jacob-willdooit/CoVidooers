@@ -18,59 +18,6 @@
         <field name="implied_ids" eval="[(4, ref('group_health_portal_nurse'))]"/>
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
-    
-    <data noupdate="1">
-        <!-- Multi - Company Rules -->
-
-        <record model="ir.rule" id="health_patient_rule">
-            <field name="name">health_patient</field>
-            <field name="model_id" ref="model_health_patient"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_medication_rule">
-            <field name="name">health_medication</field>
-            <field name="model_id" ref="model_health_medication"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_medication_event_rule">
-            <field name="name">health_medication_event</field>
-            <field name="model_id" ref="model_health_medication_event"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_condition_rule">
-            <field name="name">health_condition</field>
-            <field name="model_id" ref="model_health_condition"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_condition_category_rule">
-            <field name="name">health_condition_category</field>
-            <field name="model_id" ref="model_health_condition_category"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_condition_type_rule">
-            <field name="name">health_condition_type</field>
-            <field name="model_id" ref="model_health_condition_type"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-
-        <record model="ir.rule" id="health_event_rule">
-            <field name="name">health_event</field>
-            <field name="model_id" ref="model_health_event"/>
-            <field name="global" eval="True"/>
-            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
-        </record>
-    </data>
 </odoo>
 
 

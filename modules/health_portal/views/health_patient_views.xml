@@ -18,7 +18,7 @@
                     <group>
                         <group>
                             <field name="partner_id"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            
                             <field name="display_name"/>
                             <field name="bio_gender"/>
                             <field name="medicare_num"/>
