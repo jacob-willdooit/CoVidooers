@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
 <odoo>
     <menuitem id="menu_health_portal_root" name="Health Portal"
-        sequence="109"
-        action="health_portal_patient_record_action"
+        sequence="1"
         web_icon="health_portal,static/description/icon.png"
         groups="group_health_portal_patient"/>
 
     <menuitem id="health_portal_patient_menu" name="Patients"
         sequence="10"
-        action="health_portal_patient_record_action"
         parent="menu_health_portal_root"
         groups="group_health_portal_patient"/>
 
@@ -23,5 +21,26 @@
         </field>
     </record>
 
-    
+    <menuitem id="health_portal_patient_patient_menu" name="Patient Records"
+        sequence="10"
+        action="health_portal_patient_record_action"
+        parent="health_portal_patient_menu"
+        groups="group_health_portal_patient"/>
+
+    <record id="health_portal_patient_event_action" model="ir.actions.act_window">
+        <field name="name">Health Events</field>
+        <field name="res_model">health.event</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new health event.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="health_portal_patient_event_menu" name="Health Events"
+        sequence="10"
+        action="health_portal_patient_event_action"
+        parent="health_portal_patient_menu"
+        groups="group_health_portal_patient"/>
 </odoo>
