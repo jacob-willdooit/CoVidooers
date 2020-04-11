@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_location_form_health" model="ir.ui.view">
+        <field name="name">stock.location.form.health</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='return_location']" position="after">
+                <field name="bed_location"/>
+                <field name="wait_location"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
