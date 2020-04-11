@@ -19,7 +19,7 @@ Health Portal - Patient Management System
         'security/ir.model.access.csv',
         'views/health_condition_views.xml',
         'views/health_event_views.xml',
-        # 'views/health_medication_views.xml',
+        'views/health_medication_views.xml',
         'views/health_patient_views.xml',
         'views/health_portal_views.xml',
     ],
