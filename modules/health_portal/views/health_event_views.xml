@@ -1,5 +1,69 @@
 <?xml version="1.0"?>
 <odoo>
+    <record model="ir.ui.view" id="health_event_form">
+        <field name="name">health.event.form</field>
+        <field name="model">health.event</field>
+        <field name="arch" type="xml">
+            <form string="Event">
+                <header>
+                </header>
+                <sheet>
+                    <group string="Event Details">
+                        <field name="patient_id" readonly="1"/>
+                        <field name="type"/>
+                        <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" create="0"/>
+                        <field name="location_id"/>
+                    </group>
+                    <group string="Medication" attrs="{'readonly': [('type', '!=', 'treatment')]}">
+                        <field name="medication_id"/>
+                        <label for="dose"/>
+                        <div>
+                            <field name="dose"/>
+                            <field name="dose_uom_id" nolabel="1"/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="event_notes" attrs="{'invisible': [('note', '=', False)]}">
+                            <field name="note"/>
+                        </page>
+                        <page string="Health Practitioners" name="practitioners">
+                            <field name="practitioner_ids" widget="many2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}">
+                                <tree string="Health Practitioners" editable="top">
+                                    <field name="user_id" string="Practitioner" create="0"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Health Conditions" name="conditions">
+                            <field name="condition_ids" widget="many2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}" create="0">
+                                <tree string="Health Conditions" editable="top">
+                                    <field name="name"/>
+                                    <field name="type_id"/>
+                                    <field name="started_at"/>
+                                    <field name="ended_at"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="health_event_tree">
+        <field name="name">health.event.tree</field>
+        <field name="model">health.event</field>
+        <field name="arch" type="xml">
+            <tree string="Patient Records">
+                <field name="active" invisible="1"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="primary_practitioner_id"/>
+                <field name="medication_id"/>
+                <field name="location_id"/>
+            </tree>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="health_event_tree">
         <field name="name">health.event.tree</field>
         <field name="model">health.event</field>
