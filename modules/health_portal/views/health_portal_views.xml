@@ -10,8 +10,13 @@
         parent="menu_health_portal_root"
         groups="group_health_portal_patient"/>
 
-    <menuitem id="health_portal_config_menu" name="Configuration"
+    <menuitem id="health_portal_bed_management_menu" name="Bed Management"
         sequence="20"
+        parent="menu_health_portal_root"
+        groups="group_health_portal_doctor"/>
+
+    <menuitem id="health_portal_config_menu" name="Configuration"
+        sequence="30"
         parent="menu_health_portal_root"
         groups="group_health_portal_doctor"/>
 
@@ -64,5 +69,28 @@
         sequence="10"
         action="health_portal_medication_action"
         parent="health_portal_config_menu"
+        groups="group_health_portal_doctor"/>
+
+    <record id="health_portal_ward_action" model="ir.actions.act_window">
+        <field name="name">Ward Overview</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_location_tree2_health')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_location_form_room_health')})]"/>
+        <field name="domain">[('room_location', '=', True)]</field>
+        <field name="context">{'search_default_ward_view': 1}</field>
+        <field name="search_view_id" ref="view_location_search_health"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new ward.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="health_portal_ward_menu" name="Ward Overview"
+        sequence="10"
+        action="health_portal_ward_action"
+        parent="health_portal_bed_management_menu"
         groups="group_health_portal_doctor"/>
 </odoo>

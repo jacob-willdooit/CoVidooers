@@ -8,7 +8,69 @@
             <xpath expr="//field[@name='return_location']" position="after">
                 <field name="bed_location"/>
                 <field name="wait_location"/>
+                <field name="ward_location"/>
+                <field name="room_location"/>
             </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_location_form_room_health">
+        <field name="name">stock.location.form.room.health</field>
+        <field name="model">stock.location</field>
+        <field name="arch" type="xml">
+            <form string="Room">
+                <header>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <group>
+                        <field name="active" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                        <label for="location_id" class="oe_edit_only"/>
+                        <h2><field name="location_id" options="{'no_create': True}"/></h2>
+                    </group>
+                    <notebook>
+                        <page string="Beds" name="beds">
+                            <field name="child_ids" widget="one2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}" readonly="1">
+                                <tree string="Beds" editable="top">
+                                    <field name="name" string="Bed"/>
+                                    <field name="patient_id" string="Patient"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="comment" nolabel="1" placeholder="External note..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_location_tree2_health" model="ir.ui.view">
+        <field name="name">stock.location.tree.health</field>
+        <field name="model">stock.location</field>
+        <field name="arch" type="xml">
+            <tree string="Ward Management">
+                <field name="active" invisible="1"/>
+                <field name="location_id" invisible="1"/>
+                <field name="complete_name" string="Room"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_search_health" model="ir.ui.view">
+        <field name="name">stock.location.search.health</field>
+        <field name="model">stock.location</field>
+        <field name="arch" type="xml">
+            <search string="Ward Management">
+                <group expand='0' string='Group by...'>
+                    <filter string='Ward Overview' name="ward_view" domain="[]" context="{'group_by': 'location_id'}"/>
+               </group>
+            </search>
         </field>
     </record>
 </odoo>
