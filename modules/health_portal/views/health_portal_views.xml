@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <menuitem id="menu_health_portal_root" name="Health Portal"
-        sequence="1"
+        sequence="109"
         web_icon="health_portal,static/description/icon.png"
         groups="group_health_portal_patient"/>
 
