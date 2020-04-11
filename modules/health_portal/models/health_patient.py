@@ -7,6 +7,7 @@ class HealthPatient(models.Model):
     _description = 'Patient Record'
 
     partner_id = fields.Many2one('res.partner', string="Contact", required=True)
+    partner_image = fields.Image("Image", related="partner_id.image_1920", readonly=True)
     name = fields.Char(related='partner_id.name', store=True, readonly=True)
     display_name = fields.Char(related='partner_id.display_name', store=True, readonly=True)
     active = fields.Boolean(default=True)
