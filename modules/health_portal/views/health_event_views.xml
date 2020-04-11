@@ -13,7 +13,7 @@
                         <field name="type"/>
                         <field name="practitioner_ids" widget="many2many_tags" context="{'active_test': False}" options="{'no_create': True}"/>
                         <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" options="{'no_create': True}"/>
-                        <field name="location_id"/>
+                        <field name="location_id" attrs="{'required': [('type', 'in', ('condition','treatment'))]}"/>
                     </group>
                     <notebook>
                         <page string="Health Conditions" name="conditions">
