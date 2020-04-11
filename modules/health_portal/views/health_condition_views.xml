@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <record model="ir.ui.view" id="health_event_form">
+    <record model="ir.ui.view" id="health_condition_form">
         <field name="name">health.condition.form</field>
         <field name="model">health.condition</field>
         <field name="arch" type="xml">
@@ -9,14 +9,14 @@
                 </header>
                 <sheet>
                     <group string="Health Condition">
-                        <field name="name" readonly="1"/>
+                        <field name="name"/>
                         <field name="type_id"/>
                         <field name="started_at"/>
                         <field name="ended_at"/>
                     </group>
                     <notebook>
                         <page string="Medications" name="medications">
-                            <field name="medication_ids" widget="many2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}">
+                            <field name="medication_ids" widget="one2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}">
                                 <tree string="Medications" editable="top">
                                     <field name="medication_id"/>
                                     <field name="dosage_note"/>
@@ -34,7 +34,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="health_event_tree">
+    <record model="ir.ui.view" id="health_condition_tree">
         <field name="name">health.condition.tree</field>
         <field name="model">health.condition</field>
         <field name="arch" type="xml">

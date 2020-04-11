@@ -39,7 +39,7 @@
     </record>
 
     <menuitem id="health_portal_patient_event_menu" name="Health Events"
-        sequence="10"
+        sequence="20"
         action="health_portal_patient_event_action"
         parent="health_portal_patient_menu"
         groups="group_health_portal_patient"/>
