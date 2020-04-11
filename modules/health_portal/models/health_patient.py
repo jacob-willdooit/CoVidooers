@@ -6,11 +6,20 @@ class HealthPatient(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Patient Record'
 
+    @api.model
+    def default_get(self, fields_list):
+        res = super(HealthPatient, self).default_get(fields_list)
+
+        res['new_rec'] = not self
+
+        return res
+
     partner_id = fields.Many2one('res.partner', string="Contact", required=True)
     partner_image = fields.Image("Image", related="partner_id.image_1920", readonly=True)
     name = fields.Char(related='partner_id.name', store=True, readonly=True)
     display_name = fields.Char(related='partner_id.display_name', store=True, readonly=True)
     active = fields.Boolean(default=True)
+    new_rec = fields.Boolean(store=False, readonly=True)
     bio_gender = fields.Selection(
         [
             ('male', 'Male'),
@@ -19,8 +28,10 @@ class HealthPatient(models.Model):
         ], string='Biological Gender', required=True)
     dob = fields.Date(string='Date of Birth', required=True)
     tod = fields.Datetime(string='Time of Death', group_operator='min')
+    exp_out_date = fields.Date(string='Expected Out-Patient Date')
     age = fields.Char(string='Age', compute='_compute_age', store=True, readonly=True)
     barcode = fields.Char(string='Barcode')
+    medicare_num = fields.Integer(string='Medicare Number')
     admitted = fields.Boolean(string='Admitted', compute='_compute_admitted', store=True, readonly=True)
     state = fields.Selection(
         [

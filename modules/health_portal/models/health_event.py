@@ -7,8 +7,17 @@ class HealthEvent(models.Model):
     _description = 'Health Event'
     _order = 'create_date desc'
 
-    name = fields.Char(string='Description', translate=True, required=True)
+    @api.model
+    def default_get(self, fields_list):
+        res = super(HealthEvent, self).default_get(fields_list)
+
+        res['new_rec'] = not self
+
+        return res
+
+    name = fields.Char(string='Description', translate=True)
     active = fields.Boolean(default=True)
+    new_rec = fields.Boolean(store=False, readonly=True)
     patient_id = fields.Many2one('health.patient', string='Patient', required=True)
     type = fields.Selection(
         [

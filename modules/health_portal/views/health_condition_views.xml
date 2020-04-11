@@ -11,8 +11,9 @@
                     <group string="Health Condition">
                         <field name="name"/>
                         <field name="type_id"/>
+                        <field name="state"/>
                         <field name="started_at"/>
-                        <field name="ended_at"/>
+                        <field name="ended_at" attrs="{'required': [('state', '=', 'fatal')]}"/>
                     </group>
                     <notebook>
                         <page string="Medications" name="medications">
@@ -23,13 +24,11 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" nolabel="1"/>
+                        </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
             </form>
         </field>
     </record>
@@ -42,6 +41,7 @@
                 <field name="active" invisible="1"/>
                 <field name="name"/>
                 <field name="type_id"/>
+                <field name="state"/>
                 <field name="started_at"/>
                 <field name="ended_at"/>
             </tree>
@@ -55,12 +55,14 @@
             <search string="Search Health Conditions">
                 <field name="name"/>
                 <field name="type_id"/>
+                <field name="state"/>
                 <field name="started_at"/>
                 <field name="ended_at"/>
                 <field name="medication_ids"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
                 <group expand='0' string='Group by...'>
                     <filter string='Type' name="type" domain="[]" context="{'group_by': 'type_id'}"/>
+                    <filter string='Status' name="status" domain="[]" context="{'group_by': 'state'}"/>
                </group>
            </search>
         </field>
