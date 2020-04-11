@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <odoo>
     <menuitem id="menu_health_portal_root" name="Health Portal"
-        sequence="1"
+        sequence="109"
+        action="health_portal_patient_record_action"
+        web_icon="health_portal,static/description/icon.png"
         groups="group_health_portal_patient"/>
 
     <menuitem id="health_portal_patient_menu" name="Patients"
         sequence="10"
+        action="health_portal_patient_record_action"
         parent="menu_health_portal_root"
         groups="group_health_portal_patient"/>
 
@@ -20,7 +23,5 @@
         </field>
     </record>
 
-    <menuitem id="health_portal_patient_record_menu" action="health_portal_patient_record_action"
-        sequence="1" parent="helpdesk.health_portal_patient_menu"
-        groups="base.group_health_portal_patient"/>
+    
 </odoo>

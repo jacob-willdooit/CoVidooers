@@ -1,0 +1,8 @@
+<tree string="Events" editable="top">
+    <field name="name"/>
+    <field name="type"/>
+    <field name="practitioner_ids" invisible="1"/>
+    <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" create="0"/>
+    <field name="medication_id"/>
+    <field name="location_id"/>
+</tree>

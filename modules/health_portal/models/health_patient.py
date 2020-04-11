@@ -3,6 +3,7 @@ from odoo import api, fields, models, _
 
 class HealthPatient(models.Model):
     _name = 'health.patient'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Patient Record'
 
     partner_id = fields.Many2one('res.partner', string="Contact", required=True)
@@ -16,7 +17,7 @@ class HealthPatient(models.Model):
             ('intersex', 'Intersex'),
         ], string='Biological Gender', required=True)
     dob = fields.Date(string='Date of Birth', required=True)
-    age = fields.Integer(string='Age', compute='_compute_age', store=True, readonly=True)
+    age = fields.Char(string='Age', compute='_compute_age', store=True, readonly=True)
     barcode = fields.Char(string='Barcode')
     admitted = fields.Boolean(string='Admitted', compute='_compute_admitted', store=True, readonly=True)
     state = fields.Selection(
@@ -48,11 +49,12 @@ class HealthPatient(models.Model):
         for patient in self:
             patient.medication_ids = patient.event_ids.medication_ids
 
+    # Would need a cron job to call this function each day to update age consistently
     @api.depends('dob')
     def _compute_age(self):
         for patient in self:
-            today = fields.Date.context_today
-            patient.age = ((today.year - patient.dob.year) - ((today.month, today.day) < (patient.dob.month, patient.dob.day)))
+            today = fields.Date.context_today(self)
+            patient.age = patient.dob and ((today.year - patient.dob.year) - ((today.month, today.day) < (patient.dob.month, patient.dob.day)))
 
     @api.depends('location_id')
     def _compute_admitted(self):

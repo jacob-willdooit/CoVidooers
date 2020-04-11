@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="health_patient_form">
+        <field name="name">health.patient.form</field>
+        <field name="model">health.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient Record">
+                <header>
+                </header>
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <field name="active" invisible="1"/>
+                    <field name="admitted" invisible="1"/>
+                    <widget name="web_ribbon" title="Admitted" attrs="{'invisible': ['|', '|', ('admitted', '=', False), ('state', '=', 'deceased'), ('active', '=', True)]}"/>
+                    <widget name="web_ribbon" title="Archived" attrs="{'invisible': ['|', ('state', '=', 'deceased'), ('active', '=', True)]}"/>
+                    <widget name="web_ribbon" title="Deceased" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'deceased')]}"/>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="display_name"/>
+                            <field name="bio_gender"/>
+                            <field name="dob"/>
+                            <field name="age" nolabel="1" class="oe_read_only"/>
+                        </group>
+                        <group>
+                            <field name="location_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Events" name="events">
+                            <field name="event_ids" widget="one2many" colspan="4" nolabel="1" context="{'active_test': False, 'default_patient_id': id}">
+                                <tree string="Events">
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="practitioner_ids" invisible="1"/>
+                                    <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" create="0"/>
+                                    <field name="medication_id"/>
+                                    <field name="location_id"/>
+                                </tree>
+                                <form string="Event">
+                                    <group string="Event Details">
+                                        <field name="patient_id" readonly="1"/>
+                                        <field name="type"/>
+                                        <field name="primary_practitioner_id" attrs="{'readonly': [('practitioner_ids', '=', False)]}" create="0"/>
+                                        <field name="location_id"/>
+                                    </group>
+                                    <group string="Medication" attrs="{'readonly': [('type', '!=', 'treatment')]}">
+                                        <field name="medication_id"/>
+                                        <label for="dose"/>
+                                        <div>
+                                            <field name="dose"/>
+                                            <field name="dose_uom_id" nolabel="1"/>
+                                        </div>
+                                    </group>
+                                    <notebook>
+                                        <page string="Notes" name="event_notes" attrs="{'invisible': [('note', '=', False)]}">
+                                            <field name="note"/>
+                                        </page>
+                                        <page string="Health Practitioners" name="practitioners">
+                                            <field name="practitioner_ids" widget="many2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}">
+                                                <tree string="Health Practitioners" editable="top">
+                                                    <field name="user_id" create="0"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                        <page string="Health Conditions" name="conditions">
+                                            <field name="condition_ids" widget="many2many" colspan="4" nolabel="1" mode="tree" context="{'active_test': False}" create="0">
+                                                <tree string="Health Conditions" editable="top">
+                                                    <field name="name"/>
+                                                    <field name="type_id"/>
+                                                    <field name="started_at"/>
+                                                    <field name="ended_at"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                    </notebook>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="health_patient_tree">
+        <field name="name">health.patient.tree</field>
+        <field name="model">health.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Patient Records">
+                <field name="active" invisible="1"/>
+                <field name="admitted" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="display_name"/>
+                <field name="bio_gender"/>
+                <field name="age"/>
+                <field name="location_id"/>
+            </tree>
+        </field>
+    </record>
+
+   <record id="health_patient_search" model="ir.ui.view">
+        <field name="name">health.patient.search</field>
+        <field name="model">health.patient</field>
+        <field name="arch" type="xml">
+            <search string="Search Patient Record">
+                <field name="state"/>
+                <field name="name"/>
+                <field name="bio_gender"/>
+                <field name="age"/>
+                <field name="location_id"/>
+                <filter string="Admitted" name="admitted" domain="[('admitted', '=', False)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Living" name="living" domain="[('state', '=', 'living')]"/>
+                <filter string="Deceased" name="deceased" domain="[('state', '=', 'deceased')]" context="{'active_test': False}"/>
+                <group expand='0' string='Group by...'>
+                    <filter string='Location' name="location" domain="[]" context="{'group_by': 'location_id'}"/>
+               </group>
+           </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+<tree string="Health Conditions" editable="top">
+    <field name="name"/>
+    <field name="type_id"/>
+    <field name="started_at"/>
+    <field name="ended_at"/>
+</tree>

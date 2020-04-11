@@ -16,7 +16,7 @@ class HealthEvent(models.Model):
             ('treatment', 'Treatment'),
             ('out_patient', 'Out Patient'),
         ], string="Event Type", default='in_patient')
-    practitioner_ids = fields.Many2many('res.users', string='Health Practitioners', required=True)
+    practitioner_ids = fields.Many2many('res.users', column2='user_id', string='Health Practitioners', required=True)
     primary_practitioner_id = fields.Many2one('res.users', string='Primary Practitioner', domain="[('id', 'in', practitioner_ids)]", required=True)
     location_id = fields.Many2one('stock.location', string='Location', required=True)
 
