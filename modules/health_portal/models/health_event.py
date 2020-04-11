@@ -5,7 +5,6 @@ class HealthEvent(models.Model):
     _name = 'health.event'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Health Event'
-    _order = 'create_date desc'
 
     @api.model
     def default_get(self, fields_list):
@@ -28,6 +27,8 @@ class HealthEvent(models.Model):
     active = fields.Boolean(default=True)
     new_rec = fields.Boolean(store=False, readonly=True)
     patient_id = fields.Many2one('health.patient', string='Patient', required=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True, states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env.company)
     type = fields.Selection(
         [
             ('in_patient', 'In Patient'),

@@ -12,6 +12,8 @@ class HealthCondition(models.Model):
     type_id = fields.Many2one('health.condition.type', string='Type', required=True)
     started_at = fields.Datetime(string='Started', group_operator='min', default=fields.Datetime.now, required=True)
     ended_at = fields.Datetime(string='Ended', group_operator='min')
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True, states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env.company)
     state = fields.Selection(
         [
             ('ongoing', 'Ongoing'),
@@ -47,6 +49,8 @@ class HealthConditionCategory(models.Model):
     name = fields.Char(string='Name', translate=True, required=True)
     active = fields.Boolean(default=True)
     parent_id = fields.Many2one('health.condition.category', string='Parent Category')
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True, states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env.company)
 
 
 class HealthConditionType(models.Model):
@@ -56,3 +60,5 @@ class HealthConditionType(models.Model):
     name = fields.Char(string='Name', translate=True, required=True)
     active = fields.Boolean(default=True)
     category_id = fields.Many2one('health.condition.category', string='Category', required=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True, states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env.company)

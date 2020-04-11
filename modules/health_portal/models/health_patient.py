@@ -19,6 +19,8 @@ class HealthPatient(models.Model):
     name = fields.Char(related='partner_id.name', store=True, readonly=True)
     display_name = fields.Char(related='partner_id.display_name', store=True, readonly=True)
     active = fields.Boolean(default=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, readonly=True, states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env.company)
     new_rec = fields.Boolean(store=False, readonly=True)
     bio_gender = fields.Selection(
         [
@@ -51,7 +53,10 @@ class HealthPatient(models.Model):
             if patient.event_ids:
                 last_event = patient.event_ids[-1]
                 patient.location_id = last_event.location_id
+                last_event.location_id.patient_id = self
             else:
+                if patient.location_id:
+                    last_event.location_id.patient_id = False
                 patient.location_id = False
 
     def _compute_condition_ids(self):
